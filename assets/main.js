@@ -1,5 +1,5 @@
 const API_DOG_RANDOM = "https://api.thedogapi.com/v1/images/search?limit=2"
-const API_DOG_FAVORITES = "https://api.thedogapi.com/v1/favourites?limit=30"
+const API_DOG_FAVORITES = "https://api.thedogapi.com/v1/favourites?limit=10"
 const API_DOG_DELETE_FAV = (id) => `https://api.thedogapi.com/v1/favourites/${id}?`
 const API_DOG_UPLOAD = "https://api.thedogapi.com/v1/images/upload"
 const API_MY_UPLOAD = "https://api.thedogapi.com/v1/images"
@@ -54,9 +54,11 @@ async function loadFavoritesDog() {
     dog_favorite.innerHTML = "";
     data.map((dog) => {
       dog_favorite.innerHTML += `
-      <article>
-       <img src=${dog.image.url} alt="" height="100px">
-       <button onclick=deleteFavoritesDog(${dog.id})>Quitar favoritos</button>
+      <article class="col-6 col-sm-3 col-md-2 col-xl-1 pb-4">
+      <div class="card">
+      <img  class="card-img" src=${dog.image.url} alt="" height="100px">
+      <button class="btn btn-primary position-absolute  bottom-0 end-0 " onclick=deleteFavoritesDog(${dog.id})>X</button>
+      </div>
       </article>
       `
     })
