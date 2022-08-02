@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/style.css">
+  <title>InstaDog</title>
+</head>
+<body>
+  <nav></nav>
+  <main>
+    <section>
+      <h1>InstaDog</h1>
+    </section>
+    <span id="error"></span>
+    <section>
+      <h2>Sube la foto de tu perrito</h2>
+      <form id="uploadForm">
+        <input type="file" name="file" id="file">
+        <div id="preview_img">
+
+        </div>
+        <button type="button" onclick="uploadDog()">Subir foto</button>
+      </form>
+    </section>
+    <section>
+      <h2>Mis fotos subidas</h2>
+      <section id="my_dogs"></section>
+    </section>
+    <section>
+      <h2>Perros Random</h2>
+      <button onclick="loadRandomDog()">Cargar otros perros</button>
+      <section id="dog_random"></section>
+    </section>
+    <section>
+      <h2>Perros Favoritos</h2>
+      <section id="dog_favorite"></section>
+    </section>
+  </main>
+  <footer></footer>
+  <script src="assets/main.js"></script>
+</body>
+</html>
