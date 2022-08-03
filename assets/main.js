@@ -149,7 +149,7 @@ const res = await fetch(API_MY_UPLOAD, {
   }
 })
 const data = await res.json();
-console.log("fotos subidas:", data)
+// console.log("fotos subidas:", data)
 
 let mydogs = [];
 
