@@ -1,4 +1,4 @@
-const API_DOG_RANDOM = "https://api.thedogapi.com/v1/images/search?limit=2"
+const API_DOG_RANDOM = "https://api.thedogapi.com/v1/images/search?limit=4"
 const API_DOG_FAVORITES = "https://api.thedogapi.com/v1/favourites?limit=10"
 const API_DOG_DELETE_FAV = (id) => `https://api.thedogapi.com/v1/favourites/${id}?`
 const API_DOG_UPLOAD = "https://api.thedogapi.com/v1/images/upload"
@@ -22,14 +22,23 @@ async function loadRandomDog() {
     dog_random.innerHTML = "";
     data.map((dog) => {
       const art = document.createElement("article");
+      const div = document.createElement("div");
+      const contimg = document.createElement("div");
       const img = document.createElement("img");
       const btn = document.createElement("button");
-      const textBtn = document.createTextNode("Agregar a favoritos")
+      const textBtn = document.createTextNode("<3")
       img.src = dog.url;
       btn.append(textBtn);
-      art.append(img, btn);
+      contimg.append(img);
+      div.append(contimg, btn);
+      art.append(div);
       btn.onclick = () => saveFavoritesDog(dog.id);
       // btn.addEventListener('click',  saveFavoritesDog.bind("idDog",dog.id))
+      art.classList.add("col-6", "col-sm-3", "col-md-2", "col-xl-1", "mb-4");
+      div.classList.add("card", "h-100");
+      contimg.classList.add("d-flex", "align-items-center", "justify-content-center", "h-100");
+      img.classList.add("card-img");
+      btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0");
       arraydogs.push(art)
     })
     console.log(data)
@@ -54,11 +63,13 @@ async function loadFavoritesDog() {
     dog_favorite.innerHTML = "";
     data.map((dog) => {
       dog_favorite.innerHTML += `
-      <article class="col-6 col-sm-3 col-md-2 col-xl-1 pb-4">
-      <div class="card">
-      <img  class="card-img" src=${dog.image.url} alt="" height="100px">
-      <button class="btn btn-primary position-absolute  bottom-0 end-0 " onclick=deleteFavoritesDog(${dog.id})>X</button>
-      </div>
+      <article class="col-6 col-sm-3 col-md-2 col-xl-1 mb-4 ">
+        <div class="card h-100">
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <img  class="card-img" src=${dog.image.url} alt="perrito">
+          </div>
+          <button class="btn btn-primary position-absolute  bottom-0 end-0 " onclick=deleteFavoritesDog(${dog.id})>X</button>
+        </div>
       </article>
       `
     })
@@ -148,15 +159,33 @@ let mydogs = [];
     my_dogs.innerHTML = "";
     data.map((dog) => {
       const art = document.createElement("article");
+      const div = document.createElement("div");
+      const contimg = document.createElement("div");
       const img = document.createElement("img");
+      const btn = document.createElement("button");
+      const textBtn = document.createTextNode("Del")
       img.src = dog.url;
-      art.append(img);
+      btn.append(textBtn);
+      contimg.append(img);
+      div.append(contimg, btn);
+      art.append(div);
+      btn.onclick = () => deleteDog(dog.id);
+
+      art.classList.add("col-6", "col-sm-3", "col-md-2", "col-xl-1", "mb-4");
+      div.classList.add("card", "h-100");
+      contimg.classList.add("d-flex", "align-items-center", "justify-content-center", "h-100");
+      img.classList.add("card-img");
+      btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0");
       mydogs.push(art)
     })
     console.log(data)
     my_dogs.append(...mydogs)
   }
 
+}
+
+async function deleteDog(id) {
+  console.log(id)
 }
 
 
