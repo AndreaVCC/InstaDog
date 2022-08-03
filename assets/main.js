@@ -2,6 +2,7 @@ const API_DOG_RANDOM = "https://api.thedogapi.com/v1/images/search?limit=4"
 const API_DOG_FAVORITES = "https://api.thedogapi.com/v1/favourites?limit=10"
 const API_DOG_DELETE_FAV = (id) => `https://api.thedogapi.com/v1/favourites/${id}?`
 const API_DOG_UPLOAD = "https://api.thedogapi.com/v1/images/upload"
+const API_DOG_DELETE_UPLOAD = (id) => `https://api.thedogapi.com/v1/images/${id}`
 const API_MY_UPLOAD = "https://api.thedogapi.com/v1/images"
 
 const dog_random = document.getElementById("dog_random")
@@ -68,7 +69,7 @@ async function loadFavoritesDog() {
           <div class="d-flex align-items-center justify-content-center h-100">
             <img  class="card-img" src=${dog.image.url} alt="perrito">
           </div>
-          <button class="btn btn-primary position-absolute  bottom-0 end-0 " onclick=deleteFavoritesDog(${dog.id})>X</button>
+          <button class="btn btn-primary position-absolute  bottom-0 end-0 btn-sm" onclick=deleteFavoritesDog(${dog.id})>x</button>
         </div>
       </article>
       `
@@ -163,7 +164,7 @@ let mydogs = [];
       const contimg = document.createElement("div");
       const img = document.createElement("img");
       const btn = document.createElement("button");
-      const textBtn = document.createTextNode("Del")
+      const textBtn = document.createTextNode("x")
       img.src = dog.url;
       btn.append(textBtn);
       contimg.append(img);
@@ -175,7 +176,7 @@ let mydogs = [];
       div.classList.add("card", "h-100");
       contimg.classList.add("d-flex", "align-items-center", "justify-content-center", "h-100");
       img.classList.add("card-img");
-      btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0");
+      btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0", "btn-sm");
       mydogs.push(art)
     })
     console.log(data)
@@ -184,8 +185,24 @@ let mydogs = [];
 
 }
 
+//eliminar perros de mis fotos
 async function deleteDog(id) {
   console.log(id)
+  const res = await fetch(API_DOG_DELETE_UPLOAD(id), {
+    method: 'DELETE',
+    headers:{
+      'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c'
+    }
+  })
+
+// const data = await res.json();
+// console.log(res.status)
+
+if (res.status !== 200 && res.status !== 204) {
+  spanError.innerHTML = "Hubo un error: " + res.status;
+}else {
+  myUploadDog()
+}
 }
 
 
