@@ -95,6 +95,12 @@ async function saveFavoritesDog(id) {
   if (res.status !== 200) {
     spanError.innerHTML = "Hubo un error: " + res.status + data;
   }else {
+    Swal.fire({
+      icon: 'success',
+      title: 'Imagen añadida a favoritos',
+      showConfirmButton: false,
+      timer: 1500
+    })
     loadFavoritesDog()
   }
 }
@@ -134,8 +140,12 @@ async function uploadDog(){
   if (res.status !== 200 && res.status !== 201) {
     spanError.innerHTML = "Hubo un error: " + res.status + data;
   }else {
-    // console.log("foto cargada")
-    console.log(data)
+    Swal.fire({
+      icon: 'success',
+      title: 'Imagen cargada con éxito',
+      showConfirmButton: false,
+      timer: 1500
+    })
     myUploadDog() 
   }
 }
@@ -199,6 +209,7 @@ async function deleteDog(id) {
 if (res.status !== 200 && res.status !== 204) {
   spanError.innerHTML = "Hubo un error: " + res.status;
 }else {
+  
   myUploadDog()
 }
 }
@@ -209,3 +220,4 @@ if (res.status !== 200 && res.status !== 204) {
 loadRandomDog()
 loadFavoritesDog()
 myUploadDog()
+
