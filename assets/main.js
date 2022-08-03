@@ -126,28 +126,42 @@ if (res.status !== 200) {
 //Subir nuevo perritoos
 async function uploadDog(){
   const form = document.querySelector("#uploadForm")
+  const forminput = document.querySelector("#file")
   const formData = new FormData(form);
   // console.log(formData.get('file'));
-  const res = await fetch (API_DOG_UPLOAD, {
-    method: "POST",
-    headers: {
-      'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c',
-    },
-    body: formData,
-  })
-  const data = await res.json();
-
-  if (res.status !== 200 && res.status !== 201) {
-    spanError.innerHTML = "Hubo un error: " + res.status + data;
-  }else {
-    Swal.fire({
-      icon: 'success',
-      title: 'Imagen cargada con éxito',
-      showConfirmButton: false,
-      timer: 1500
+ console.log(form)
+ console.log(formData)
+  if(forminput.value !== ""){
+    const res = await fetch (API_DOG_UPLOAD, {
+      method: "POST",
+      headers: {
+        'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c',
+      },
+      body: formData,
     })
-    myUploadDog() 
+    const data = await res.json();
+  
+    if (res.status !== 200 && res.status !== 201) {
+      spanError.innerHTML = "Hubo un error: " + res.status + data;
+    }else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Imagen cargada con éxito',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      myUploadDog() 
+      
+    }
+    forminput.value == ""
+  } else{
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Debes seleccionar una imagen para subir',
+    })
   }
+
 }
 
 // mis fotos subidas
@@ -194,24 +208,32 @@ let mydogs = [];
 }
 
 //eliminar perros de mis fotos
-async function deleteDog(id) {
+function deleteDog(id) {
   console.log(id)
-  const res = await fetch(API_DOG_DELETE_UPLOAD(id), {
-    method: 'DELETE',
-    headers:{
-      'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c'
-    }
-  })
 
-// const data = await res.json();
-// console.log(res.status)
 
-if (res.status !== 200 && res.status !== 204) {
-  spanError.innerHTML = "Hubo un error: " + res.status;
-}else {
+     Swal.fire({
+      title: '¿Seguro que quieres borrarla?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // console.log(result)
+        const res = fetch(API_DOG_DELETE_UPLOAD(id), {
+          method: 'DELETE',
+          headers:{
+            'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c'
+          }
+        })
+        myUploadDog()
+      
+      
+      }
+    })
   
-  myUploadDog()
-}
 }
 
 
