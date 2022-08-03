@@ -3,7 +3,7 @@ const API_DOG_FAVORITES = "https://api.thedogapi.com/v1/favourites?limit=10"
 const API_DOG_DELETE_FAV = (id) => `https://api.thedogapi.com/v1/favourites/${id}?`
 const API_DOG_UPLOAD = "https://api.thedogapi.com/v1/images/upload"
 const API_DOG_DELETE_UPLOAD = (id) => `https://api.thedogapi.com/v1/images/${id}`
-const API_MY_UPLOAD = "https://api.thedogapi.com/v1/images"
+const API_MY_UPLOAD = "https://api.thedogapi.com/v1/images?limit=5"
 
 const dog_random = document.getElementById("dog_random")
 const my_dogs = document.getElementById("my_dogs")
@@ -39,10 +39,10 @@ async function loadRandomDog() {
       div.classList.add("card", "h-100");
       contimg.classList.add("d-flex", "align-items-center", "justify-content-center", "h-100");
       img.classList.add("card-img");
-      btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0");
+      btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0", "btn-sm");
       arraydogs.push(art)
     })
-    console.log(data)
+    // console.log(data)
     dog_random.append(...arraydogs)
   }
 }
@@ -56,7 +56,7 @@ async function loadFavoritesDog() {
     }
   });
   const data = await res.json();
-  console.log(data)
+  // console.log(data)
 
   if (res.status !== 200) {
     spanError.innerHTML = "Hubo un error: " + res.status;
@@ -117,15 +117,14 @@ if (res.status !== 200) {
 }
 }
 
-//Subir nuevo perros
+//Subir nuevo perritoos
 async function uploadDog(){
   const form = document.querySelector("#uploadForm")
   const formData = new FormData(form);
-  console.log(formData.get('file'));
+  // console.log(formData.get('file'));
   const res = await fetch (API_DOG_UPLOAD, {
     method: "POST",
     headers: {
-      // 'Content-Type': 'multipart/form-data;boundary=----',
       'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c',
     },
     body: formData,
@@ -135,8 +134,8 @@ async function uploadDog(){
   if (res.status !== 200 && res.status !== 201) {
     spanError.innerHTML = "Hubo un error: " + res.status + data;
   }else {
-    console.log("foto subida")
-    console.log(data.url)
+    // console.log("foto cargada")
+    console.log(data)
     myUploadDog() 
   }
 }
@@ -150,7 +149,7 @@ const res = await fetch(API_MY_UPLOAD, {
   }
 })
 const data = await res.json();
-console.log(data)
+console.log("fotos subidas:", data)
 
 let mydogs = [];
 
@@ -179,7 +178,6 @@ let mydogs = [];
       btn.classList.add("btn", "btn-primary", "position-absolute",  "bottom-0", "end-0", "btn-sm");
       mydogs.push(art)
     })
-    console.log(data)
     my_dogs.append(...mydogs)
   }
 
