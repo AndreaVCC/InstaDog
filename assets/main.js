@@ -106,21 +106,29 @@ async function saveFavoritesDog(id) {
 }
 
 //Eliminar perros de favoritos
-async function deleteFavoritesDog(id) {
-  const res = await fetch(API_DOG_DELETE_FAV(id), {
-    method: 'DELETE',
-    headers:{
-      'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c'
+function deleteFavoritesDog(id) {
+
+  Swal.fire({
+    title: '¿Seguro que quieres elimarla de favoritos?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, borrar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // console.log(result)
+      const res = fetch(API_DOG_DELETE_FAV(id), {
+        method: 'DELETE',
+        headers:{
+          'X-API-KEY': 'd5d2143b-c9a8-437b-a4a4-bf67d4c1a33c'
+        }
+      })
+      loadFavoritesDog()
+    
+    
     }
   })
-
-const data = await res.json();
-
-if (res.status !== 200) {
-  spanError.innerHTML = "Hubo un error: " + res.status + data;
-}else {
-    loadFavoritesDog()
-}
 }
 
 //Subir nuevo perritoos
